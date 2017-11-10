@@ -4,7 +4,7 @@ const formWidth = 200;
 
 const styles = StyleSheet.create({
     view: {
-        marginTop: 50,
+        paddingTop: 50,
         flex: 1,
         alignItems: 'center'
     },
