@@ -1,0 +1,17 @@
+[
+    {
+        "name": "None",
+        "param": "",
+        "order": 0
+    },
+    {
+        "name": "Stars",
+        "param": "stars",
+        "order": 1
+    },
+    {
+        "name": "Forks",
+        "param": "forks",
+        "order": 2
+    }
+]

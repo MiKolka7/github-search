@@ -1,0 +1,11 @@
+{
+    "GITHUB_API_URL": "https://api.github.com/",
+    "GITHUB_CLIENT_ID": "2fd0f747ea257838c3cb",
+    "GITHUB_CLIENT_SECRET": "94b0d293878c93fb1fc319c574d42abc3860e220",
+    "AUTH0_CLIENT_ID": "5Q5WFNSYOZBTFPqs8VYZ6AHaIa5OpAn6",
+    "AUTH0_DOMAIN": "mikolka.eu.auth0.com",
+    "OAUTH_CALLBACK_URL": {
+        "ios": "RGHA://oauth",
+        "android": "http://localhost/github"
+    }
+}
