@@ -27,5 +27,14 @@ export const screens = {
         screen: 'app.searchScreen',
         title: 'Search',
         navigatorStyle
+        // rightButtons: [
+        //     {
+        //         title: 'Log out',
+        //         id: 'logOut',
+        //         buttonColor: '#000',
+        //         buttonFontSize: 14,
+        //         buttonFontWeight: '600',
+        //     }
+        // ]
     }
 };

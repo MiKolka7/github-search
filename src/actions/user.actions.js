@@ -36,6 +36,15 @@ export const auth = (userLogin, pass) => (dispatch) => {
         });
 };
 
+
+export const logOut = (data) => (dispatch) => {
+    AsyncStorage.multiRemove(['repositories', 'auth']);
+
+    dispatch({
+        type: types.USER_LOG_OUT
+    });
+};
+
 export const checkAuth = (data) => (dispatch) => {
     dispatch(setUserToken(types.USER_GET_CACHE_AUTH, data));
 

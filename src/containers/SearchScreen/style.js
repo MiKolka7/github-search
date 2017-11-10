@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
 
     modal: {
         width: '90%',
-        height: '65%'
+        height: '70%'
     },
 
     modalBtnClose: {
         position: 'absolute',
-        bottom: 60,
+        bottom: 20,
         width: 100,
         left: '50%',
         marginLeft: -50,

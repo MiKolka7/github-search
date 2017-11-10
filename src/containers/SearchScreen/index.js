@@ -2,23 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { AsyncStorage, ListView, Text, TextInput, View, WebView } from 'react-native';
+import { AsyncStorage, ListView, Text, TextInput, TouchableOpacity, View, WebView } from 'react-native';
 import { object } from 'prop-types';
 import debounce from 'lodash/debounce';
 import Modal from 'react-native-modalbox';
 
 import * as gitHubActions from '../../actions/github.actions';
+import * as userActions from '../../actions/user.actions';
 import Styles from './style';
 import RepositoryCard from '../../components/RepositoryCard';
 import ProgressBar from '../../components/ProgressBar';
 import Button from '../../components/Button';
+import { screens } from '../../screens';
 
 const filters = require('./filters.json');
 
 class SearchScreen extends Component {
     static propTypes = {
         actions:      object.isRequired,
-        repositories: object.isRequired
+        network:      object.isRequired,
+        navigator:    object.isRequired,
+        repositories: object.isRequired,
+        userActions:  object.isRequired
     };
 
     constructor(props) {
@@ -31,6 +36,8 @@ class SearchScreen extends Component {
         this.onChangeSortBy = this._onChangeSortBy.bind(this);
 
         this.dataSource = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
+
+        this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
     }
 
     state = {
@@ -59,6 +66,13 @@ class SearchScreen extends Component {
 
         if (onlineNew === false && list && list.length === 0) {
             this._resetData();
+        }
+    }
+
+    _onNavigatorEvent({ type, id }) {
+        if (type === 'NavBarButtonPress' && id === 'logOut') {
+            this.props.userActions.logOut();
+            this.props.navigator.resetTo(screens.authScreen);
         }
     }
 
@@ -202,12 +216,12 @@ class SearchScreen extends Component {
         const isFetchingNewData = isFetching && page <= 1 && online;
 
         const bContent = (
-            <Button
+            <TouchableOpacity
                 style = { Styles.modalBtnClose }
                 onPress = { () => this.refs.modal.close() }
             >
                 <Text style = { Styles.textCenter }>Close</Text>
-            </Button>
+            </TouchableOpacity>
         );
 
         return (
@@ -243,7 +257,8 @@ class SearchScreen extends Component {
                 }
 
                 <Modal
-                    backdropPressToClose
+                    coverScreen
+                    backButtonClose
                     backdropContent = { bContent }
                     position = { 'center' }
                     ref = { 'modal' }
@@ -266,7 +281,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(gitHubActions, dispatch)
+        actions: bindActionCreators(gitHubActions, dispatch),
+        userActions: bindActionCreators(userActions, dispatch),
     };
 }
 

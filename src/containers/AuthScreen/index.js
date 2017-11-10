@@ -44,7 +44,7 @@ class AuthScreen extends Component {
     };
 
     componentWillMount() {
-        if (this.isAndroid) {
+        if (!this.isAndroid) {
             this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
             this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
         }
@@ -66,8 +66,10 @@ class AuthScreen extends Component {
     }
 
     componentWillUnmount() {
-        this.keyboardWillShowSub.remove();
-        this.keyboardWillHideSub.remove();
+        if (!this.isAndroid) {
+            this.keyboardWillShowSub.remove();
+            this.keyboardWillHideSub.remove();
+        }
     }
 
     _openNextScreen() {
