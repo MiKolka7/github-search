@@ -1,16 +1,25 @@
+import { object } from 'prop-types';
 import React, { Component } from 'react';
+
+import {
+    Animated,
+    AsyncStorage,
+    Image,
+    Keyboard,
+    Platform,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Animated, AsyncStorage, Image, Keyboard, Text, TextInput, View } from 'react-native';
-import { object } from 'prop-types';
-
-import Styles from './style';
 import * as userActions from '../../actions/user.actions';
+import Button from '../../components/Button';
 import ProgressBar from '../../components/ProgressBar';
 import { messages } from '../../constants/general';
-import Button from '../../components/Button';
 import { screens } from '../../screens';
+import Styles from './style';
 
 const octocat = require('../../assets/img/octocat.png');
 
@@ -23,6 +32,7 @@ class AuthScreen extends Component {
         super(props);
 
         this.keyboardHeight = new Animated.Value(0);
+        this.isAndroid = Platform.OS === 'android';
         this.handlerSubmit = this._handlerSubmit.bind(this);
     }
 
@@ -34,8 +44,10 @@ class AuthScreen extends Component {
     };
 
     componentWillMount() {
-        this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
-        this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
+        if (this.isAndroid) {
+            this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
+            this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
+        }
     }
 
     componentDidMount() {

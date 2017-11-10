@@ -1,17 +1,19 @@
 import { StyleSheet } from 'react-native';
 
+const formWidth = 200;
+
 const styles = StyleSheet.create({
     view: {
+        marginTop: 50,
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'center'
     },
     content: {
-        width: 200,
+        width: formWidth,
         alignItems: 'center'
     },
     textInput: {
-        width: '100%',
+        width: formWidth,
         height: 35,
         marginBottom: 10,
         paddingHorizontal: 8,
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
         borderColor: '#353535'
     },
     btn: {
-        minWidth: '100%',
+        minWidth: formWidth,
         paddingVertical: 5,
         paddingHorizontal: 15,
         alignItems: 'center',
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
         zIndex: 10
     },
-    
+
     alertBox: {
         height: 30,
         marginTop: 15,

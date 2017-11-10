@@ -3,11 +3,6 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // ...Platform.select({
-        //     ios: {
-        //         paddingTop: 64
-        //     }
-        // })
     },
 
     infoContainer: {
@@ -62,7 +57,12 @@ const styles = StyleSheet.create({
     },
     listView: {
         padding: 10,
-        flex: 1
+        flex: 1,
+        ...Platform.select({
+            android: {
+                paddingBottom: 20,
+            }
+        }),
     },
 
     sortBtn: {
