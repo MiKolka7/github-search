@@ -1,5 +1,5 @@
-import initialState from './initialState';
-import * as types from '../constants/actionTypes';
+import initialState from '../../reducers/initialState';
+import * as types from '../../constants/actionTypes';
 
 export default function (state = initialState.repositories, action) {
     switch (action.type) {

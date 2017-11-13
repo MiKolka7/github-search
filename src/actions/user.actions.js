@@ -1,11 +1,10 @@
 import { AsyncStorage } from 'react-native';
 import Base64 from 'base-64';
-import * as types from '../constants/actionTypes';
-import { config } from '../constants/general';
 
-const setUserToken = (type, auth) => {
-    return {type, payload: auth};
-};
+import * as types from '../constants/actionTypes';
+import { config, storageKeys } from '../constants/general';
+
+const setUserToken = (type, auth) => ({type, payload: auth});
 
 export const auth = (userLogin, pass) => (dispatch) => {
     const reqBody = {
@@ -29,7 +28,7 @@ export const auth = (userLogin, pass) => (dispatch) => {
                 return false;
             }
             else {
-                AsyncStorage.setItem('auth', JSON.stringify(data));
+                AsyncStorage.setItem(storageKeys.auth, JSON.stringify(data));
                 dispatch(setUserToken(types.USER_AUTH, data));
                 return true;
             }
@@ -38,7 +37,7 @@ export const auth = (userLogin, pass) => (dispatch) => {
 
 
 export const logOut = (data) => (dispatch) => {
-    AsyncStorage.multiRemove(['repositories', 'auth']);
+    AsyncStorage.multiRemove([storageKeys.rep, storageKeys.auth]);
 
     dispatch({
         type: types.USER_LOG_OUT

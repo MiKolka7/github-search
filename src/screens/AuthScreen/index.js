@@ -17,7 +17,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from '../../actions/user.actions';
 import Button from '../../components/Button';
 import ProgressBar from '../../components/ProgressBar';
-import { messages } from '../../constants/general';
+import { messages, storageKeys } from '../../constants/general';
 import { screens } from '../../screens';
 import Styles from './style';
 
@@ -53,7 +53,7 @@ class AuthScreen extends Component {
     componentDidMount() {
         this.setState(() => ({ isFetching: true }));
 
-        AsyncStorage.getItem('auth').then((data) => {
+        AsyncStorage.getItem(storageKeys.auth).then((data) => {
             const auth = JSON.parse(data);
 
             if (auth && auth.token) {
@@ -132,15 +132,8 @@ class AuthScreen extends Component {
     render() {
         const { userLogin, pass, isFetching, errorFetchingText } = this.state;
 
-        const loader = (
-            <View style = { Styles.loader }>
-                <ProgressBar />
-            </View>
-        );
-
         return (
             <View style = { Styles.view }>
-                { isFetching && loader }
                 <Animated.View style = { [Styles.content, { paddingBottom: this.keyboardHeight }] }>
                     <Image source = { octocat } style = { Styles.img } />
 
@@ -172,6 +165,8 @@ class AuthScreen extends Component {
                         <Text style = { Styles.alertText }>{ errorFetchingText }</Text>
                     </View>
                 </Animated.View>
+
+                { isFetching && <ProgressBar fullScreen /> }
             </View>
         );
     }

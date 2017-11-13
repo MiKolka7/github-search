@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
-import { config } from '../constants/general';
-import * as types from '../constants/actionTypes';
+import { config, storageKeys } from '../../constants/general';
+import * as types from '../../constants/actionTypes';
 
 const searchRepositoriesFetching = (searchParams) => {
     return {
@@ -55,7 +55,7 @@ export const onSearchRepositories = (query, page = 1, sort) => (dispatch, state)
         .then((res) => res.json())
         .then((data) => {
             dispatch(searchRepositoriesSuccess(data, page > 1));
-            AsyncStorage.setItem('repositories', JSON.stringify({
+            AsyncStorage.setItem(storageKeys.rep, JSON.stringify({
                 list:       [...list, ...data.items],
                 totalCount: data.total_count
             }));

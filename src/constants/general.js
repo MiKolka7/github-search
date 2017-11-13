@@ -6,3 +6,8 @@ export const messages = {
         undef: 'Something went wrong'
     }
 }
+
+export const storageKeys = {
+    auth: 'AUTH' ,
+    rep: 'REPOSITORIES'
+}

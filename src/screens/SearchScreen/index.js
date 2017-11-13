@@ -7,8 +7,9 @@ import { object } from 'prop-types';
 import debounce from 'lodash/debounce';
 import Modal from 'react-native-modalbox';
 
-import * as gitHubActions from '../../actions/github.actions';
+import * as gitHubActions from './github.actions';
 import * as userActions from '../../actions/user.actions';
+import { storageKeys } from '../../constants/general';
 import Styles from './style';
 import RepositoryCard from '../../components/RepositoryCard';
 import ProgressBar from '../../components/ProgressBar';
@@ -77,7 +78,7 @@ class SearchScreen extends Component {
     }
 
     _resetData() {
-        AsyncStorage.getItem('repositories').then((data) => {
+        AsyncStorage.getItem(storageKeys.rep).then((data) => {
             const rep = JSON.parse(data);
 
             if (rep) {
@@ -162,7 +163,7 @@ class SearchScreen extends Component {
                     renderRow = { renderRowFn }
                     renderSeparator = { renderSeparatorFn }
                     renderFooter = { footerFn }
-                    onEndReached = { () => this.nextPage() }
+                    onEndReached = { this.nextPage }
                     onEndReachedThreshold = { 500 }
                 />
             );
@@ -186,8 +187,7 @@ class SearchScreen extends Component {
             .map(({ name, param }) => (
                 <Button
                     key = { name }
-                    onPress = { () => this.onChangeSortBy(param) }
-                >
+                    onPress = { () => this.onChangeSortBy(param) }>
                     <View style = { [Styles.sortBtn, param === sort ? Styles.isActiveBtn : null] }>
                         <Text style = { Styles.textCenter }>{ name }</Text>
                     </View>
@@ -215,13 +215,22 @@ class SearchScreen extends Component {
 
         const isFetchingNewData = isFetching && page <= 1 && online;
 
-        const bContent = (
+        const modalContent = (
             <TouchableOpacity
                 style = { Styles.modalBtnClose }
                 onPress = { () => this.refs.modal.close() }
             >
                 <Text style = { Styles.textCenter }>Close</Text>
             </TouchableOpacity>
+        );
+
+        const offlineBox = (
+            <View style = { [Styles.infoContainer, list.length ? Styles.infoContainerSmall : null] }>
+                <Text>
+                    Offline!
+                    { list.length ? ' You see old results' : '' }
+                </Text>
+            </View>
         );
 
         return (
@@ -242,14 +251,7 @@ class SearchScreen extends Component {
                     { this._renderFilterBox() }
                 </View>
 
-                { !online && (
-                    <View style = { [Styles.infoContainer, list.length ? Styles.infoContainerSmall : null] }>
-                        <Text>
-                            Offline!
-                            { list.length ? ' You see old results' : '' }
-                        </Text>
-                    </View>
-                ) }
+                { !online && offlineBox }
 
                 { isFetchingNewData
                     ? <ProgressBar />
@@ -259,7 +261,7 @@ class SearchScreen extends Component {
                 <Modal
                     coverScreen
                     backButtonClose
-                    backdropContent = { bContent }
+                    backdropContent = { modalContent }
                     position = { 'center' }
                     ref = { 'modal' }
                     style = { Styles.modal }

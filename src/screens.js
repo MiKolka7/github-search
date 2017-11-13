@@ -1,7 +1,7 @@
 import { Navigation } from 'react-native-navigation';
 
-import AuthScreen from './containers/AuthScreen';
-import SearchScreen from './containers/SearchScreen';
+import AuthScreen from './screens/AuthScreen';
+import SearchScreen from './screens/SearchScreen';
 
 export default function registerScreens(store, Provider) {
     Navigation.registerComponent('app.authScreen', () => AuthScreen, store, Provider);
@@ -27,14 +27,16 @@ export const screens = {
         screen: 'app.searchScreen',
         title: 'Search',
         navigatorStyle
-        // rightButtons: [
-        //     {
-        //         title: 'Log out',
-        //         id: 'logOut',
-        //         buttonColor: '#000',
-        //         buttonFontSize: 14,
-        //         buttonFontWeight: '600',
-        //     }
-        // ]
+        /*navigatorButtons: {
+            rightButtons: [
+                {
+                    title: 'Log out',
+                    id: 'logOut',
+                    buttonColor: '#000',
+                    buttonFontSize: 14,
+                    buttonFontWeight: '600',
+                }
+            ]
+        }*/
     }
 };
